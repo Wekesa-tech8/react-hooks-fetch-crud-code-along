@@ -1,26 +1,39 @@
 import React, { useState } from "react";
 
-function ItemForm() {
+function ItemForm({ onAddItem }) {
   const [name, setName] = useState("");
   const [category, setCategory] = useState("Produce");
 
+  function handleSubmit(e) {
+    e.preventDefault();
+    const newItem = {
+      id: Date.now(),
+      name,
+      category,
+      isInCart: false,
+    };
+    onAddItem(newItem);
+    setName("");
+    setCategory("Produce");
+  }
+
   return (
-    <form className="NewItem">
+    <form className="NewItem" onSubmit={handleSubmit}>
       <label>
         Name:
-        <input
-          type="text"
-          name="name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+        <input 
+          type="text" 
+          name="name" 
+          value={name} 
+          onChange={(e) => setName(e.target.value)} 
         />
       </label>
 
       <label>
         Category:
-        <select
-          name="category"
-          value={category}
+        <select 
+          name="category" 
+          value={category} 
           onChange={(e) => setCategory(e.target.value)}
         >
           <option value="Produce">Produce</option>
